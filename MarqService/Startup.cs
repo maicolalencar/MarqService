@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using MarqService.Models;
+using MarqService.Data;
 
 namespace MarqService
 {
@@ -24,6 +27,9 @@ namespace MarqService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<MarqServiceContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MarqServiceContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
