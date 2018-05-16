@@ -12,13 +12,14 @@ using System;
 namespace MarqService.Migrations
 {
     [DbContext(typeof(MarqServiceContext))]
-    partial class MarqServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20180420020922_emailTelefone")]
+    partial class emailTelefone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("MarqService.Models.Agendamentos", b =>

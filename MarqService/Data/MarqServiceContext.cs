@@ -17,6 +17,9 @@ namespace MarqService.Data
         {
             modelBuilder.Entity<AnamnesesMedidas>()
                 .HasKey(c => new { c.IdAnamnese, c.IdMedidas });
+            modelBuilder.Entity<Cliente>()
+                .HasMany<Agendamentos>(c => c.Agendamentos);
+
         }
 
         public DbSet<MarqService.Models.Cliente> Cliente { get; set; }
@@ -28,5 +31,8 @@ namespace MarqService.Data
         public DbSet<MarqService.Models.Pagamentos> Pagamentos { get; set; }
 
         public DbSet<MarqService.Models.Medida> Medida { get; set; }
+
+        public DbSet<MarqService.Models.Agendamentos> Agendamentos { get; set; }
+
     }
 }

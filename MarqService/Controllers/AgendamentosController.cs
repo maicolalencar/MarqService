@@ -5,63 +5,63 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MarqService.Models;
 using MarqService.Data;
+using MarqService.Models;
 
 namespace MarqService.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Clientes")]
-    public class ClientesController : Controller
+    [Route("api/Agendamentos")]
+    public class AgendamentosController : Controller
     {
         private readonly MarqServiceContext _context;
 
-        public ClientesController(MarqServiceContext context)
+        public AgendamentosController(MarqServiceContext context)
         {
             _context = context;
         }
 
-        // GET: api/Clientes
+        // GET: api/Agendamentos
         [HttpGet]
-        public IEnumerable<Cliente> GetCliente()
+        public IEnumerable<Agendamentos> GetAgendamentos()
         {
-            return _context.Cliente.Include(c => c.Agendamentos);
+            return _context.Agendamentos;
         }
 
-        // GET: api/Clientes/5
+        // GET: api/Agendamentos/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCliente([FromRoute] int id)
+        public async Task<IActionResult> GetAgendamentos([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var cliente = await _context.Cliente.Include(c => c.Agendamentos).SingleOrDefaultAsync(m => m.IdCliente == id);
+            var agendamentos = await _context.Agendamentos.SingleOrDefaultAsync(m => m.id == id);
 
-            if (cliente == null)
+            if (agendamentos == null)
             {
                 return NotFound();
             }
 
-            return Ok(cliente);
+            return Ok(agendamentos);
         }
 
-        // PUT: api/Clientes/5
+        // PUT: api/Agendamentos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente([FromRoute] int id, [FromBody] Cliente cliente)
+        public async Task<IActionResult> PutAgendamentos([FromRoute] int id, [FromBody] Agendamentos agendamentos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != cliente.IdCliente)
+            if (id != agendamentos.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(agendamentos).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace MarqService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
+                if (!AgendamentosExists(id))
                 {
                     return NotFound();
                 }
@@ -82,45 +82,45 @@ namespace MarqService.Controllers
             return NoContent();
         }
 
-        // POST: api/Clientes
+        // POST: api/Agendamentos
         [HttpPost]
-        public async Task<IActionResult> PostCliente([FromBody] Cliente cliente)
+        public async Task<IActionResult> PostAgendamentos([FromBody] Agendamentos agendamentos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Cliente.Add(cliente);
+            _context.Agendamentos.Add(agendamentos);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.IdCliente }, cliente);
+            return CreatedAtAction("GetAgendamentos", new { id = agendamentos.id }, agendamentos);
         }
 
-        // DELETE: api/Clientes/5
+        // DELETE: api/Agendamentos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente([FromRoute] int id)
+        public async Task<IActionResult> DeleteAgendamentos([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var cliente = await _context.Cliente.Include(c => c.Agendamentos).SingleOrDefaultAsync(m => m.IdCliente == id);
-            if (cliente == null)
+            var agendamentos = await _context.Agendamentos.SingleOrDefaultAsync(m => m.id == id);
+            if (agendamentos == null)
             {
                 return NotFound();
             }
 
-            _context.Cliente.Remove(cliente);
+            _context.Agendamentos.Remove(agendamentos);
             await _context.SaveChangesAsync();
 
-            return Ok(cliente);
+            return Ok(agendamentos);
         }
 
-        private bool ClienteExists(int id)
+        private bool AgendamentosExists(int id)
         {
-            return _context.Cliente.Any(e => e.IdCliente == id);
+            return _context.Agendamentos.Any(e => e.id == id);
         }
     }
 }

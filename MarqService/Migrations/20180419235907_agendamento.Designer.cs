@@ -12,13 +12,14 @@ using System;
 namespace MarqService.Migrations
 {
     [DbContext(typeof(MarqServiceContext))]
-    partial class MarqServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20180419235907_agendamento")]
+    partial class agendamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("MarqService.Models.Agendamentos", b =>
@@ -26,15 +27,11 @@ namespace MarqService.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ClienteIdCliente");
-
                     b.Property<int>("DiaDaSemana");
 
                     b.Property<TimeSpan>("Hora");
 
                     b.HasKey("id");
-
-                    b.HasIndex("ClienteIdCliente");
 
                     b.ToTable("Agendamentos");
                 });
@@ -77,6 +74,8 @@ namespace MarqService.Migrations
                     b.Property<int>("IdCliente")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("Agendamentosid");
+
                     b.Property<DateTime>("DataNascimento");
 
                     b.Property<string>("Endereco");
@@ -84,11 +83,9 @@ namespace MarqService.Migrations
                     b.Property<string>("NomeCliente")
                         .IsRequired();
 
-                    b.Property<string>("email");
-
-                    b.Property<string>("telefone");
-
                     b.HasKey("IdCliente");
+
+                    b.HasIndex("Agendamentosid");
 
                     b.ToTable("Cliente");
                 });
@@ -138,13 +135,6 @@ namespace MarqService.Migrations
                     b.ToTable("Pagamentos");
                 });
 
-            modelBuilder.Entity("MarqService.Models.Agendamentos", b =>
-                {
-                    b.HasOne("MarqService.Models.Cliente")
-                        .WithMany("Agendamentos")
-                        .HasForeignKey("ClienteIdCliente");
-                });
-
             modelBuilder.Entity("MarqService.Models.Anamnese", b =>
                 {
                     b.HasOne("MarqService.Models.Cliente", "Cliente")
@@ -163,6 +153,13 @@ namespace MarqService.Migrations
                     b.HasOne("MarqService.Models.Medida", "Medida")
                         .WithMany("AnamnesesMedidas")
                         .HasForeignKey("MedidaIdMedida");
+                });
+
+            modelBuilder.Entity("MarqService.Models.Cliente", b =>
+                {
+                    b.HasOne("MarqService.Models.Agendamentos", "Agendamentos")
+                        .WithMany()
+                        .HasForeignKey("Agendamentosid");
                 });
 
             modelBuilder.Entity("MarqService.Models.Massagens", b =>

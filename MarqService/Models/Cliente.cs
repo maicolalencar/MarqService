@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,8 +20,10 @@ namespace MarqService.Models
 
         public string Endereco { get; set; }
 
-        public DiasDaSemana DiaDaSemana { get; set; }
+        public string email { get; set; }
 
-        public TimeSpan Hora { get; set; }
+        public string telefone { get; set; }
+
+        public IList<Agendamentos> Agendamentos { get; set; }
     }
 }
