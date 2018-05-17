@@ -37,7 +37,7 @@ namespace MarqService.Controllers
                 return BadRequest(ModelState);
             }
 
-            var cliente = await _context.Cliente.Include(c => c.Agendamentos).SingleOrDefaultAsync(m => m.IdCliente == id);
+            var cliente = await _context.Cliente.Include(c => c.Agendamentos).Include(c => c.Pagamentos).SingleOrDefaultAsync(m => m.IdCliente == id);
 
             if (cliente == null)
             {

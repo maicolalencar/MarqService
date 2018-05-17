@@ -9,14 +9,9 @@ namespace MarqService.Models
 {
     public class Pagamentos
     {
-        [Key]
-        [Required]
+        public int Id { get; set; }
         public DateTime DataPagamento { get; set; }
-        [Required]
         public int IdCliente { get; set; }
-        [Required]
-        public Cliente Cliente { get; set; }
-        [Required]
         public decimal Valor { get; set; }
 
     }

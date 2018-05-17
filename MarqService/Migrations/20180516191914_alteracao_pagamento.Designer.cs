@@ -12,9 +12,10 @@ using System;
 namespace MarqService.Migrations
 {
     [DbContext(typeof(MarqServiceContext))]
-    partial class MarqServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20180516191914_alteracao_pagamento")]
+    partial class alteracao_pagamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

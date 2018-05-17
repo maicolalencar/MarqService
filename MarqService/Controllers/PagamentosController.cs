@@ -30,14 +30,14 @@ namespace MarqService.Controllers
 
         // GET: api/Pagamentos/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPagamentos([FromRoute] DateTime id)
+        public async Task<IActionResult> GetPagamentos([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var pagamentos = await _context.Pagamentos.SingleOrDefaultAsync(m => m.DataPagamento == id);
+            var pagamentos = await _context.Pagamentos.SingleOrDefaultAsync(m => m.Id == id);
 
             if (pagamentos == null)
             {
@@ -49,14 +49,14 @@ namespace MarqService.Controllers
 
         // PUT: api/Pagamentos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPagamentos([FromRoute] DateTime id, [FromBody] Pagamentos pagamentos)
+        public async Task<IActionResult> PutPagamentos([FromRoute] int id, [FromBody] Pagamentos pagamentos)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != pagamentos.DataPagamento)
+            if (id != pagamentos.Id)
             {
                 return BadRequest();
             }
@@ -98,7 +98,7 @@ namespace MarqService.Controllers
             }
             catch (DbUpdateException)
             {
-                if (PagamentosExists(pagamentos.DataPagamento))
+                if (PagamentosExists(pagamentos.Id))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -108,19 +108,19 @@ namespace MarqService.Controllers
                 }
             }
 
-            return CreatedAtAction("GetPagamentos", new { id = pagamentos.DataPagamento }, pagamentos);
+            return CreatedAtAction("GetPagamentos", new { id = pagamentos.Id }, pagamentos);
         }
 
         // DELETE: api/Pagamentos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePagamentos([FromRoute] DateTime id)
+        public async Task<IActionResult> DeletePagamentos([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var pagamentos = await _context.Pagamentos.SingleOrDefaultAsync(m => m.DataPagamento == id);
+            var pagamentos = await _context.Pagamentos.SingleOrDefaultAsync(m => m.Id == id);
             if (pagamentos == null)
             {
                 return NotFound();
@@ -132,9 +132,9 @@ namespace MarqService.Controllers
             return Ok(pagamentos);
         }
 
-        private bool PagamentosExists(DateTime id)
+        private bool PagamentosExists(int id)
         {
-            return _context.Pagamentos.Any(e => e.DataPagamento == id);
+            return _context.Pagamentos.Any(e => e.Id == id);
         }
     }
 }
